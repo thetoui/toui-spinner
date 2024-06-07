@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.4.21",
-    "vue-wheel-spinner": "^0.2.1"
+    "vue-wheel-spinner": "^0.2.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
