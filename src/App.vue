@@ -1,16 +1,25 @@
 <template>
-  <VueWheelSpinner
-      ref="spinner"
-      :slices="slices"
-      :winnerIndex="winnerIndex"
-      :spinDuration="spinDuration"
-      :spinButtonLabel="spinButtonLabel"
-      :spinButtonBackgroundColor="spinButtonBackgroundColor"
-      :spinButtonLabelColor="spinButtonLabelColor"
-      @spin-start="onSpinStart"
-      @spin-end="onSpinEnd"
-  />
-  <p v-if="spinning">Spinning...</p>
+
+  <div class="wheel">
+    <VueWheelSpinner
+        ref="spinner"
+        :slices="slices"
+        :winnerIndex="winnerIndex"
+        :spinDuration="spinDuration"
+        :spinButtonLabel="spinButtonLabel"
+        :spinButtonBackgroundColor="spinButtonBackgroundColor"
+        :spinButtonLabelColor="spinButtonLabelColor"
+        @spin-start="onSpinStart"
+        @spin-end="onSpinEnd"
+    />
+  </div>
+
+  <div>
+    <button v-for="(slice, index) in slices" :disabled="spinning" @click="spinFor(index)">
+      Win for {{ slice.text }}
+    </button>
+  </div>
+
 </template>
 
 <script>
@@ -39,23 +48,57 @@ export default {
     };
   },
   methods: {
+    spinFor(index) {
+      this.winnerIndex = index;
+      this.$refs.spinner.spinWheel(index);
+    },
     onSpinStart() {
       this.spinning = true;
     },
     onSpinEnd(winnerIndex) {
       this.spinning = false;
-      console.log(winnerIndex);
-      console.log(this.slices[winnerIndex]);
       alert(`Winner: ${this.slices[winnerIndex].text}`);
     }
   }
 };
 </script>
 
-<style>
-#app {
+<style scoped>
+
+.wheel {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 30px 0;
 }
+
+button {
+  transition: all 0.3s;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #eaeaea;
+  color: #000;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 </style>
