@@ -40,9 +40,9 @@
           <div class="mb-3" v-for="(slice, index) in slices">
             <div class="input-group">
               <div class="input-group-text p-0">
-                <input v-model="slices[index].color" class="form-control form-control-color border-0" type="color">
+                <input v-model="slice.color" class="form-control form-control-color border-0" type="color">
               </div>
-              <input v-model="slices[index].text" class="form-control" type="text">
+              <input v-model="slice.text" class="form-control" type="text">
               <button class="btn btn-danger" @click="slices.splice(index, 1)">Remove</button>
             </div>
           </div>
