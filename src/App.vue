@@ -111,7 +111,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="shining_dots_color" class="form-label">Dot Color / Size / Count</label>
+            <label for="shining_dots_color" class="form-label">Dot Color / Size / Count / Shine Color</label>
             <div class="input-group">
               <div class="input-group-text p-0">
                 <input v-model="shiningDotsColor" id="shining_dots_color"
