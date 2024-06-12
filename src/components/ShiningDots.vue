@@ -1,10 +1,5 @@
 <template>
-  <div class="shining-dots" :style="{
-    'border': 'solid ' + Math.round(borderWidth / 2) + 'px ' + borderColor,
-    'padding': Math.round(borderWidth / 2) + 'px',
-    'background-color': borderColor,
-    '--shine-color': shineColor,
-  }">
+  <div class="shining-dots" :style="shiningDotsStyle">
     <div
         v-for="(dot, index) in dotCount"
         :key="index"
@@ -48,8 +43,12 @@ const props = defineProps({
 const dotCount = computed(() => props.count);
 const dotColor = computed(() => props.color);
 const dotSize = computed(() => props.size);
-const borderColor = computed(() => props.borderColor);
-const borderWidth = computed(() => props.borderWidth);
+const shiningDotsStyle = computed(() => ({
+  border: `solid ${Math.round(props.borderWidth / 2)}px ${props.borderColor}`,
+  padding: `${Math.round(props.borderWidth / 2)}px`,
+  backgroundColor: props.borderColor,
+  '--shine-color': props.shineColor,
+}));
 
 const getDotStyle = (index) => {
   const angle = (index / dotCount.value) * 2 * Math.PI;
@@ -82,7 +81,8 @@ const getDotStyle = (index) => {
   z-index: 1;
   box-shadow: 0 0 5px var(--shine-color), 0 0 10px var(--shine-color);
   animation: shine 0.5s infinite alternate;
-  transform: translate(-50%, -50%); /* Center dots at calculated position */
+  transform: translate(-50%, -50%);
+  will-change: transform, box-shadow, opacity;
 }
 
 @keyframes shine {
