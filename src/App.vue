@@ -170,10 +170,10 @@ export default {
       const result = [];
       const colors = [
         "#eb4d4b",
-  "#e78e8a",
-  "#e3b3b1",
-  "#e8d6d4",
-  "#f4eae9",
+        "#e78e8a",
+        "#e3b3b1",
+        "#e8d6d4",
+        "#f4eae9",
       ];  // Predefined colors
       for (let i = 1; i <= count; i++) {
         result.push({
@@ -193,7 +193,7 @@ export default {
       if (this.buttonClickAudio) {
         this.playAudio(this.buttonClickAudio)
       }
-      this.$refs.spinner.spinWheel(this.defaultWinner);
+      this.spinRandom(); // Updated to call spinRandom method
     },
     handleSpinButtonHover() {
       if (this.buttonHoverAudio) {
@@ -214,10 +214,16 @@ export default {
         this.cursorDistance = 0;
       }
     },
-    spinRandom() {
-      const index = 3; // ดึงค่าจากapi
-      this.defaultWinner = index;
-      this.$refs.spinner.spinWheel(index);
+    async spinRandom() {
+      try {
+        const response = await fetch('https://api.ubill.xyz/spin/api.php');
+        const data = await response.json();
+        const index = data.index; // Assuming the API returns an object with an "index" field
+        this.defaultWinner = index;
+        this.$refs.spinner.spinWheel(index);
+      } catch (error) {
+        console.error('Error fetching data from API:', error);
+      }
     },
     onSpinStart() {
       this.winnerResult = null;
@@ -235,6 +241,7 @@ export default {
   }
 };
 </script>
+
 
 <style>
 
