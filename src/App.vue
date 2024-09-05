@@ -5,7 +5,7 @@
     <div class="row align-content-start justify-content-around">
 
       <div class="col-12 text-center text-lg-start">
-        <h1 class="mb-4 mb-lg-5">🎡 Vue Wheel Spinner</h1>
+        <h1 class="mb-4 mb-lg-5">🎡 วงแชร์นุ่น</h1>
       </div>
 
       <div class="col-12 col-lg-5 order-1 order-lg-0 mt-5">
@@ -24,9 +24,9 @@
               </select>
               <button class="btn btn-success px-4" :disabled="isSpinning" @click="spinFor(defaultWinner)">
                 <span class="spinner-border spinner-border-sm me-2" v-if="isSpinning" role="status">
-                  <span class="visually-hidden">Loading...</span>
+                  <span class="visually-hidden">กำลังสุ่ม...</span>
                 </span>
-                Spin
+                สุ่ม
               </button>
             </div>
           </div>
@@ -35,7 +35,7 @@
 
         <fieldset class="mb-4">
 
-          <legend>Slices</legend>
+          <legend>รายชื่อ</legend>
 
           <div class="mb-3" v-for="(slice, index) in slices">
             <div class="input-group">
@@ -43,13 +43,12 @@
                 <input v-model="slice.color" class="form-control form-control-color border-0" type="color">
               </div>
               <input v-model="slice.text" class="form-control" type="text">
-              <button class="btn btn-danger" @click="slices.splice(index, 1)">Remove</button>
+              <button class="btn btn-danger" @click="slices.splice(index, 1)">ลบ</button>
             </div>
           </div>
 
           <div class="text-center">
-            <button class="btn btn-primary" @click="slices.push({ color: getRandomColor(), text: 'New Slice' })">Add
-              Slice
+            <button class="btn btn-primary" @click="slices.push({ color: getRandomColor(), text: 'รายชื่อใหม่' })">เพิ่มช่อง
             </button>
           </div>
 
@@ -141,7 +140,7 @@
               Winner: <span>{{ winnerResult.text }}</span> 🎉
             </div>
             <div v-else-if="isSpinning">
-              Spinning...
+              กำลังสุ่ม...
             </div>
             <div v-else>
               Ready to spin?
@@ -178,7 +177,7 @@
                     @click="handleSpinButtonClick"
                     @mouseover="handleSpinButtonHover"
                     @mouseleave="handleSpinButtonLeave">
-                  Spin
+                  สุ่ม
                 </button>
               </template>
 
@@ -192,7 +191,7 @@
                 :disabled="isSpinning"
                 @click="spinRandom()">
                 <span class="spinner-border spinner-border-sm me-2" v-if="isSpinning" role="status">
-                  <span class="visually-hidden">Loading...</span>
+                  <span class="visually-hidden">กำลังสุ่ม...</span>
                 </span>
               Spin for Random
             </button>
@@ -239,15 +238,15 @@ export default {
         spinning: spinningSound
       },
       cursorImage,
-      cursorAngle: 0,
+      cursorAngle: 270,
       cursorPosition: 'edge',
       cursorDistance: 0,
       shiningDotsColor: '#ffffff',
       shiningDotsShineColor: '#ffd800',
       shiningDotsBorderColor: '#1e254c',
-      shiningDotsBorderWidth: 30,
+      shiningDotsBorderWidth: -30,
       shiningDotsSize: 8,
-      shiningDotsCount: 60
+      shiningDotsCount: 70
     };
   },
   watch: {
