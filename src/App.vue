@@ -267,7 +267,7 @@ export default {
     createColorTextArray(count) {
       const result = [];
       const colors = [
-        '#eb4d4b',
+        '#000000',
         '#ffffff',
       ];  // Predefined colors
       for (let i = 1; i <= count; i++) {
