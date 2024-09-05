@@ -16,11 +16,11 @@ import { computed } from 'vue';
 const props = defineProps({
   color: {
     type: String,
-    default: 'yellow',
+    default: 'red',
   },
   shineColor: {
     type: String,
-    default: 'yellow',
+    default: 'red',
   },
   borderColor: {
     type: String,

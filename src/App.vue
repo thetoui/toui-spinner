@@ -12,29 +12,6 @@
 
         <fieldset class="mb-4">
 
-          <legend>Play</legend>
-
-          <div class="mb-3">
-            <label for="win_option" class="form-label">Select Winner</label>
-            <div class="input-group">
-              <select v-model="defaultWinner" id="win_option" :disabled="isSpinning" class="form-select">
-                <option v-for="(slice, index) in slices" :value="index">
-                  {{ slice.text }}
-                </option>
-              </select>
-              <button class="btn btn-success px-4" :disabled="isSpinning" @click="spinFor(defaultWinner)">
-                <span class="spinner-border spinner-border-sm me-2" v-if="isSpinning" role="status">
-                  <span class="visually-hidden">กำลังสุ่ม...</span>
-                </span>
-                สุ่ม
-              </button>
-            </div>
-          </div>
-
-        </fieldset>
-
-        <fieldset class="mb-4">
-
           <legend>รายชื่อ</legend>
 
           <div class="mb-3" v-for="(slice, index) in slices">
@@ -54,81 +31,6 @@
 
         </fieldset>
 
-        <fieldset class="mb-4">
-
-          <legend>Cursor</legend>
-
-          <div class="row mb-3">
-            <div class="col-6">
-              <label for="cursor_angle" class="form-label">Cursor Angle</label>
-              <div class="input-group">
-                <input v-model="cursorAngle" id="cursor_angle" class="form-control" type="number" max="360" min="0">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                  <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li v-for="angle in [0, 45, 90, 135, 180, 225, 270, 315, 360]">
-                    <div class="dropdown-item cursor-pointer" @click="cursorAngle = angle">{{ angle }} deg</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-6">
-              <label for="cursor_distance" class="form-label">Cursor Distance</label>
-              <input v-model="cursorDistance" id="cursor_distance" class="form-control" type="number">
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="cursor_position" class="form-label">Cursor Position</label>
-            <select v-model="cursorPosition" id="cursor_position" @change="handleCursorPositionChange" class="form-select">
-              <option value="edge">Edge</option>
-              <option value="center">Center</option>
-            </select>
-          </div>
-
-        </fieldset>
-
-        <fieldset class="mb-4">
-
-          <legend>Shining Dots</legend>
-
-          <div class="alert alert-info" role="alert">
-            Shining dots is not a part of the vue-wheel-spinner component. It's a separate component which built in this demo.
-            You can create different external ornaments like this.
-          </div>
-
-          <div class="row mb-3">
-            <label for="shining_dots_border_color" class="form-label">Border Color / Width</label>
-            <div class="input-group">
-              <div class="input-group-text p-0">
-                <input v-model="shiningDotsBorderColor" id="shining_dots_border_color"
-                       class="form-control form-control-color border-0" type="color">
-              </div>
-              <input v-model="shiningDotsBorderWidth" id="shining_dots_border_width" class="form-control" type="number">
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="shining_dots_color" class="form-label">Dot Color / Size / Count / Shine Color</label>
-            <div class="input-group">
-              <div class="input-group-text p-0">
-                <input v-model="shiningDotsColor" id="shining_dots_color"
-                       class="form-control form-control-color border-0"
-                       type="color">
-              </div>
-              <input v-model="shiningDotsSize" id="shining_dots_size" class="form-control" type="number">
-              <input v-model="shiningDotsCount" id="shining_dots_count" class="form-control" type="number">
-              <div class="input-group-text p-0">
-                <input v-model="shiningDotsShineColor" id="shining_dots_shine_color"
-                       class="form-control form-control-color border-0"
-                       type="color">
-              </div>
-            </div>
-          </div>
-
-        </fieldset>
-
       </div>
 
       <div class="col-12 col-lg-7 px-lg-5 order-0 order-lg-1">
@@ -137,13 +39,13 @@
 
           <div class="fs-2 text-center">
             <div v-if="winnerResult">
-              Winner: <span>{{ winnerResult.text }}</span> 🎉
+              ผู้ชนะคือ <span>{{ winnerResult.text }}</span> 🎉
             </div>
             <div v-else-if="isSpinning">
               กำลังสุ่ม...
             </div>
             <div v-else>
-              Ready to spin?
+              เริ่มสุ่มเลยมั้ย?
             </div>
           </div>
 
@@ -174,7 +76,7 @@
                 <button
                     class="spin-button"
                     :disabled="isSpinning"
-                    @click="handleSpinButtonClick"
+                    @click="spinRandom()"
                     @mouseover="handleSpinButtonHover"
                     @mouseleave="handleSpinButtonLeave">
                   สุ่ม
@@ -193,7 +95,7 @@
                 <span class="spinner-border spinner-border-sm me-2" v-if="isSpinning" role="status">
                   <span class="visually-hidden">กำลังสุ่ม...</span>
                 </span>
-              Spin for Random
+              เริ่มสุ่ม
             </button>
           </div>
 
@@ -227,7 +129,7 @@ export default {
   data() {
     return {
       winnerResult: null,
-      slices: this.createColorTextArray(8),
+      slices: this.createColorTextArray(6),
       isSpinning: false,
       defaultWinner: 0,
       sounds: {
@@ -267,13 +169,16 @@ export default {
     createColorTextArray(count) {
       const result = [];
       const colors = [
-        '#000000',
-        '#ffffff',
+        "#eb4d4b",
+  "#e78e8a",
+  "#e3b3b1",
+  "#e8d6d4",
+  "#f4eae9",
       ];  // Predefined colors
       for (let i = 1; i <= count; i++) {
         result.push({
           color: colors[i % colors.length],  // Alternate colors
-          text: 'Slice ' + i,        // Convert number to string
+          text: 'ชื่อคนที่ ' + i,        // Convert number to string
         });
       }
       return result;
@@ -309,13 +214,10 @@ export default {
         this.cursorDistance = 0;
       }
     },
-    spinFor(index) {
+    spinRandom() {
+      const index = 3; // ดึงค่าจากapi
       this.defaultWinner = index;
       this.$refs.spinner.spinWheel(index);
-    },
-    spinRandom() {
-      const randomSlice = Math.floor(Math.random() * this.slices.length);
-      this.$refs.spinner.spinWheel(randomSlice);
     },
     onSpinStart() {
       this.winnerResult = null;
